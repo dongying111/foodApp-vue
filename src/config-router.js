@@ -1,0 +1,59 @@
+export default function(router){
+	//console.log(router)成功接收到作为参数穿过的router
+	router.map({
+		'/error':{
+			component:function(resolve){
+				resolve({
+					template:'<div>您访问的页面未找到</div>'
+				})
+			}
+		},
+		'/login':{
+			component:function(resolve){//异步加载组件
+				require(['./login'],resolve)
+				//require为vue独特的引入方式，第一个参数为需要加载的组件，第二个参数为rsolve
+			}
+		},
+
+		'/index':{
+			component:function(resolve){
+				require(['./index'],resolve)
+			},
+			subRoutes:{
+				'/home':{
+					component:function(resolve){//异步加载组件
+						require(['./home'],resolve)
+					}
+				},
+				'/list':{
+					component:function(resolve){//异步加载组件
+						require(['./list'],resolve)
+					}
+				},
+				'/about':{
+					component:function(resolve){//异步加载组件
+						require(['./about'],resolve)
+					}
+				},
+				'/chat':{
+					component:function(resolve){//异步加载组件
+						require(['./chat'],resolve)
+					}
+				},
+				'/my':{
+					component:function(resolve){//异步加载组件
+						require(['./my'],resolve)
+					}
+				}
+			}
+		}
+	})
+
+
+	
+	router.redirect({//重定向问题
+		"*":'/error',
+		"/":"/login",
+		"/index":"/index/home"
+	})
+}
